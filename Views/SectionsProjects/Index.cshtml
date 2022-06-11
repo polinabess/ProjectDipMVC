@@ -1,0 +1,81 @@
+﻿@model IEnumerable<ProjectDipMVC.Models.SectionsProjectIndex>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@if (!Model.Any() || Model.FirstOrDefault() == null)
+{
+    <p style="color:red">
+        У вас нет назначеных проектов!
+    </p>
+    
+}else{
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Section_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Section_Number)
+            </th>            
+            <th>
+                @Html.DisplayNameFor(model => model.NameSections)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberSections)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameFileSections)
+            </th>            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Section_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Section_Number)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.NameSections)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberSections)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameFileSections)
+            </td>            
+            <td>
+                        @{
+                            var actNameCreateOrEdit = (null == item.SectionsId) ? "Create" : "Edit";
+                            object routeValCreateOrEdit = (null == item.SectionsId)
+                                ? new { ProjDscrptId = item.ProjDscrptId }
+                                : new { ProjDscrptId = item.ProjDscrptId, SectionsId = item.SectionsId };
+                            var isVisibility = null != item.SectionsId ? "visible" : "hidden";
+                            var separator = null != item.SectionsId ? "|" : string.Empty;
+                        }
+                @Html.ActionLink("Изменить", actNameCreateOrEdit, "SectionsProjects", routeValCreateOrEdit)
+                @*<a asp-action="Edit" asp-route-id="@item?.SectionsId">Edit</a>*@ |
+                <a asp-action="Details" asp-route-id="@item?.SectionsId">Details</a> 
+                @separator <a asp-action="Delete" asp-route-id="@item?.SectionsId" style="visibility:@isVisibility">Удалить</a>                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+}
