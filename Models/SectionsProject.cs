@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectDipMVC.Models
 {
     public partial class SectionsProject
     {
+        [Key]
         public int SectionsId { get; set; }
         public string? NameSections { get; set; }
         public int? NumberSections { get; set; }

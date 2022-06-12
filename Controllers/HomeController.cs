@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectDipMVC.Controllers
 {
+    [Authorize(Roles = "Администратор, Редактор, Главный редактор")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

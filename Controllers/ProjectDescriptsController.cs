@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectDipMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectDipMVC.Controllers
 {
+    [Authorize(Roles = "Администратор, Главный редактор")]
     public class ProjectDescriptsController : Controller
     {
         private readonly ProjectDipContext _context;

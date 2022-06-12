@@ -40,7 +40,8 @@ namespace ProjectDipMVC.Models
         {
             modelBuilder.Entity<Project>(entity =>
             {
-                entity.Property(e => e.ProjectId).HasColumnName("Project_id");
+                entity.Property(e => e.ProjectId)
+                .HasColumnName("Project_id");
 
                 entity.Property(e => e.DateCreate)
                     .HasColumnType("date")
@@ -54,15 +55,15 @@ namespace ProjectDipMVC.Models
 
                 entity.Property(e => e.TitulName)
                     .HasMaxLength(200)
-                    .IsUnicode(false)
-                    .HasColumnName("Titul_Name");
+                        .IsUnicode(false)
+                        .HasColumnName("Titul_Name");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Projects)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.NoAction)
                     .HasConstraintName("FK_Projects_Users");
             });
 
@@ -85,20 +86,28 @@ namespace ProjectDipMVC.Models
                     .IsUnicode(false)
                     .HasColumnName("Section_Name");
 
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.ProjectDescripts)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientNoAction)
+                    .HasConstraintName("FK_Proj_Dscrpt_Project");
+
+                /*entity.HasOne(d => d.Project)
+                .WithMany(p => p.ProjectDescripts)
+                .HasForeignKey(d => d.ProjectId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_ProjectDescript_Project_ProjectId");*/
+
                 entity.Property(e => e.SectionNumber).HasColumnName("Section_Number");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
-                entity.HasOne(d => d.Project)
-                    .WithMany(p => p.ProjectDescripts)
-                    .HasForeignKey(d => d.ProjectId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Proj_Dscrpt_Project");
+                
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.ProjectDescripts)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Proj_Dscrpt_Users");
             });
 

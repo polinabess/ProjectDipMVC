@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectDipMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectDipMVC.Controllers
 {
+
+    [Authorize(Roles = "Администратор, Гланый редактор")]
     public class ProjectsController : Controller
     {
         private readonly ProjectDipContext _context;
@@ -23,7 +26,14 @@ namespace ProjectDipMVC.Controllers
         public async Task<IActionResult> Index()
         {
             var projectDipContext = _context.Projects.Include(p => p.User);
-            return View(await projectDipContext.ToListAsync());
+            try
+            {
+                var t = projectDipContext.ToList();
+            }catch(Exception ex)
+            {
+                var t = ex;
+            }
+                return View(await projectDipContext.ToListAsync());
         }
 
         // GET: Projects/Details/5

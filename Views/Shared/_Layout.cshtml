@@ -24,7 +24,37 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                    </ul>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (this.User.IsInRole("Редактор"))
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="SectionsProjects" asp-action="Index">SectionsProjects</a>
+                                </li>
+
+                                @if (this.User.IsInRole("Главный редактор"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="ProjectDescripts" asp-action="Index">ProjectDescripts</a>
+                                    </li>
+
+                                    @if (this.User.IsInRole("Администратор"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                                        </li>
+                                    }
+                                }
+                            }
+                        }
+
+
+                        </ul>
                 </div>
             </div>
         </nav>

@@ -11,6 +11,7 @@ namespace ProjectDipMVC.Models
             ProjectDescripts = new HashSet<ProjectDescript>();
         }
 
+        //[Key]
         public int ProjectId { get; set; }
         [Display(Name = "Имя проекта")]
         public string Name { get; set; } = null!;
